@@ -1,24 +1,31 @@
 //server.js
 
 const express = require('express');
+const hbs = require('hbs');
 
 //new express app
 var app = express();
+
+//express configurations
+app.set('view engine', 'hbs');
 
 //middleware
 //serve the public directory
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
-  res.send('<h1>Hello Express!<h1> \
-  <a href="/help.html">help</a> \
-  <a href="/about">about</a> \
-  <a href="/bad">bad</a>');
-  // res.send('{"foo":"bar"}');
+  res.render('./home.hbs', {
+    pageTitle: 'Home Page',
+    currentYear: new Date().getFullYear(),
+    welcomeMessage: 'Go Away.'
+  });
 });
 
 app.get('/about', (req, res) => {
-  res.send('about page');
+  res.render('./about.hbs', {
+    pageTitle: 'About Page',
+    currentYear: new Date().getFullYear()
+  });
 });
 
 app.get('/bad', (req, res) => {
